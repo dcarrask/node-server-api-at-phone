@@ -34,3 +34,12 @@ api.use(cors);
 // httpsServer.listen(8443);
 
 module.exports = app
+
+
+/*
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/dcarrask/node-server-api-at-phone.git
+git push -u origin master
+*/
