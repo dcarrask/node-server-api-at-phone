@@ -4,7 +4,20 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "NODE_ENV=development nodemon --experimental-json-modules --experimental-specifier-resolution=node server.js",
+
+
+    "local": "nodemon server.js",
+    "build": "babel src --out-dir build",
+    "start-babel": "nodemon server.js --exec babel-node",
+    "dev-app": "NODE_ENV=development nodemon --experimental-json-modules --experimental-specifier-resolution=node src/app.js",
+    "dev-warnings": "NODE_ENV=development nodemon --experimental-json-modules server.js",
+    "dev10": "NODE_ENV=development nodemonn server.js",
+    "prod": "NODE_ENV=production nodemon server.js",
+    "dreamhost": "NODE_ENV=production nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-babel2": "nodemon server.js --exec babel-node --presets es2015"
   },
   "author": "",
   "license": "ISC",
