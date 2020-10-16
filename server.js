@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 8080;
 
 console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
-var server = app.listen(PORT, '0.0.0.0', function () {
+// var server = app.listen(PORT, '0.0.0.0', function () {
+var server = app.listen(config.port || 8080 || '0.0.0.0', '192.168.1.1', function () {
 	console.log(`App now running on => http://${process.env.DOMAIN}:${PORT}\n`);
 });
