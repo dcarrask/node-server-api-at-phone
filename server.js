@@ -10,7 +10,8 @@ if(process.env.NODE_ENV === 'production'){
 
 console.log(`STARTING SERVER!!!\n`);
 
-const PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT || 8080;
+// PORT = 4000;
 
 console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
