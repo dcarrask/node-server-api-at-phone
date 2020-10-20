@@ -9,7 +9,7 @@ api.get('', (req, res) => { res.status(200).send('Welcome to the API') });
 
 api.get('/test', functions.test);
 
-api.get('/time', (req, res) => { res.status(200).send({ date: new Date() }) });
+api.get('/time', functions.getTime);
 
 api.get('/dispenser-add/:name/:ssid/:pwd', functions.dispenserAdd);
 
