@@ -13,4 +13,6 @@ api.get('/dispenser-add/:name/:ssid/:pwd', functions.dispenserAdd);
 
 api.post('/dispenser-add', functions.add);
 
+api.post('/config_wifi', functions.add);
+
 module.exports = api
