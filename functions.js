@@ -179,11 +179,17 @@ const add = async (req, res) => {
 
   // }
   
-}  
+}
+
+const getTime = (req, res) => {
+	console.log(`Yeppp... estamos en getTime`);
+	res.status(200).send({ date: new Date() })
+}
 
 
 module.exports = {
 	test,
 	dispenserAdd,
-	add
+	add,
+	getTime
 }
