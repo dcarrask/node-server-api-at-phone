@@ -2,8 +2,9 @@
 
 const api = require('./routes')
 
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 var app = express();
 
 app.use(bodyParser.json({limit: '10mb', extended: true}))
@@ -26,9 +27,44 @@ if(process.env.NODE_ENV === 'production'){
 
 console.log(`app.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
+
+
+
+const allowedOrigins = [
+  'capacitor://localhost',
+  'ionic://localhost',
+  'http://localhost',
+  'http://localhost:8080',
+  'http://localhost:8100',
+  '*'
+];
+
+// Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Origin not allowed by CORS'));
+    }
+  }
+}
+
+// Enable preflight requests for all routes
+app.options('*', cors(corsOptions));
+
+app.get('/cors', cors(corsOptions), (req, res, next) => {
+  res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
+})
+
+
+
+
+
 app.listen(PORT, 'localhost', function () {
-  console.log(`Listening to port: ${process.env.PORT}\n`);
+  console.log(`CORS-enabled web server listening on port: ${process.env.PORT}\n`);
 });
+
 
 
 
