@@ -101,9 +101,7 @@ const allowedOrigins = [
 //   }
 // }
 // app.use(cors(corsOptions));
-// app.use(cors());
-
-const cors = require('cors')
+app.use(cors());
 
 app.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -114,11 +112,9 @@ app.use(function(req, res, next) {
 
 
 
-app.use('/api', cors(), api);
+app.use('/api', api);
 
-app.listen(PORT, 'localhost', function () {
-  console.log(`CORS-enabled web server listening on port: ${process.env.PORT}\n`);
-});
+
 
 
 // httpServer.listen(8080);
