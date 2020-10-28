@@ -40,30 +40,28 @@ const allowedOrigins = [
 ];
 
 // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Origin not allowed by CORS'));
-    }
-  }
-}
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (allowedOrigins.includes(origin) || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Origin not allowed by CORS'));
+//     }
+//   }
+// }
 
-// Enable preflight requests for all routes
-app.options('*', cors(corsOptions));
+// // Enable preflight requests for all routes
+// app.options('*', cors(corsOptions));
 
-app.get('/cors', cors(corsOptions), (req, res, next) => {
-  res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
-})
-
-
+// app.get('/cors', cors(corsOptions), (req, res, next) => {
+//   res.json({ message: 'This route is CORS-enabled for an allowed origin.' });
+// })
 
 
 
-app.listen(PORT, 'localhost', function () {
-  console.log(`CORS-enabled web server listening on port: ${process.env.PORT}\n`);
-});
+
+
+
 
 
 
@@ -91,7 +89,34 @@ app.listen(PORT, 'localhost', function () {
 // const cors = require('cors');
 // api.use(cors);
 
+// CORS ################################
+// import cors from 'cors';
+// const whitelist = ['*.*', 'http://localhost:4200', 'http://example2.com', 'http://localhost:8100/'];
+// const corsOptions = {
+//   credentials: true, // This is important.
+//   origin: (origin, callback) => {
+//     if(whitelist.includes(origin))
+//       return callback(null, true)
+//       callback(new Error('Not allowed by CORS'));
+//   }
+// }
+// app.use(cors(corsOptions));
+app.use(cors());
+
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+
+
 app.use('/api', api);
+
+app.listen(PORT, 'localhost', function () {
+  console.log(`CORS-enabled web server listening on port: ${process.env.PORT}\n`);
+});
 
 
 // httpServer.listen(8080);
