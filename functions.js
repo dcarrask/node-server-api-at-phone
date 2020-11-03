@@ -183,7 +183,7 @@ const add = async (req, res) => {
 
 const getTime = (req, res) => {
 	console.log(`Yeppp... estamos en getTime`);
-	res.status(200).send({ date: new Date() })
+	res.status(200).send({ date: new Date(), output: 'ueeeeeeep' })
 }
 
 

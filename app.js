@@ -103,16 +103,17 @@ const allowedOrigins = [
 // app.use(cors(corsOptions));
 app.use(cors());
 
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+//   next();
+// });
 
 
 
-app.use('/api', api);
+// app.use('/api', api);
+app.use('/', api);
 
 
 
@@ -120,7 +121,34 @@ app.use('/api', api);
 // httpServer.listen(8080);
 // httpsServer.listen(8443);
 
-module.exports = app
+if(process.env.NODE_ENV === 'production'){
+	require('dotenv').config({ path: '.env.production' })
+} else {
+	require('dotenv').config({ path: '.env.development' })
+}
+
+console.log(`STARTING SERVER!!!\n`);
+
+// let PORT = process.env.PORT || 8080;
+// PORT = 4000;
+
+console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
+
+// var server = app.listen(PORT, '0.0.0.0', function () {
+// var server = app.listen(PORT, '192.168.1.1', function () {
+// var server = app.listen(config.port, '0.0.0.0', function () {    
+// var server = app.listen(PORT, '0.0.0.0', function () {
+// app.listen
+app.listen(PORT, '0.0.0.0', function () {
+// app.listen(PORT, function () {
+	console.log(`App now running on => http://${process.env.DOMAIN}:${PORT}\n`);
+});
+
+
+
+
+
+// module.exports = app
 
 
 /*
