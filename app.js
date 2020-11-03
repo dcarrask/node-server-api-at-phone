@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 // const PORT = process.env.PORT || 8080;
 // const PORT = 8080;
-const PORT = 80;
+// const PORT = 80;
 
 // var httpServer = http.createServer(app);
 // var privateKey  = fs.readFileSync('./ssl/server.key', 'utf8');
@@ -21,13 +21,9 @@ const PORT = 80;
 // var https = require('https');
 // var httpsServer = https.createServer(credentials, app);
 
-if(process.env.NODE_ENV === 'production'){
-  require('dotenv').config({ path: '.env.production' })
-} else {
-  require('dotenv').config({ path: '.env.development' })
-}
 
-console.log(`app.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
+
+// console.log(`app.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
 
 
@@ -133,6 +129,8 @@ console.log(`STARTING SERVER!!!\n`);
 
 // let PORT = process.env.PORT || 8080;
 // PORT = 4000;
+
+const PORT = 80;
 
 console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
