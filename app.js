@@ -10,7 +10,9 @@ var app = express();
 app.use(bodyParser.json({limit: '10mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+// const PORT = 8080;
+const PORT = 80;
 
 // var httpServer = http.createServer(app);
 // var privateKey  = fs.readFileSync('./ssl/server.key', 'utf8');
