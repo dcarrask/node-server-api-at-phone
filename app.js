@@ -130,7 +130,8 @@ console.log(`STARTING SERVER!!!\n`);
 // let PORT = process.env.PORT || 8080;
 // PORT = 4000;
 
-const PORT = 80;
+// const PORT = 80;
+const PORT = 3000;
 
 console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
 
