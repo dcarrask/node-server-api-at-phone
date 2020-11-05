@@ -5,8 +5,8 @@ const api = require('./routes')
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const express = require('express');
-var app = express();
+// const express = require('express');
+// var app = express();
 
 const app = require('http').createServer();
 
