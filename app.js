@@ -135,7 +135,7 @@ console.log(`STARTING SERVER!!!\n`);
 const PORT = process.env.PORT || 8080;
 // const PORT = 3000;
 
-console.log(`server.js ### PORT: ${PORT}`);
+console.log(`server.js ### PORT: ${PORT}\n`);
 
 // var server = app.listen(PORT, '0.0.0.0', function () {
 // var server = app.listen(PORT, '192.168.1.1', function () {
@@ -192,5 +192,7 @@ function getIP(){
 
   // console.log(`results:\n${JSON.stringify(results, null, 2)}`);
   // console.log(`results["en0"][0]:\n${JSON.stringify(results["en0"][0], null, 2)}`);
-  return results["en0"][0];
+  const output = results["en0"] ? results["en0"][0] : results["wlan0"][0]
+  
+  return output;
 }
