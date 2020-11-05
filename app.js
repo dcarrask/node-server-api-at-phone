@@ -113,7 +113,8 @@ app.use(cors());
 
 // app.use('/api', api);
 // app.use('/', api);
-app.use(String(process.env.API_PATH), api);
+// const path = String(process.env.API_PATH == undefined ? process.env.API_PATH : '/');
+
 
 
 
@@ -121,35 +122,32 @@ app.use(String(process.env.API_PATH), api);
 // httpServer.listen(8080);
 // httpsServer.listen(8443);
 
+console.log(`\nSTARTING SERVER # ${process.env.NODE_ENV} config \n`);
+
+// console.log(`process.env.NODE_ENV: `);
+
 if(process.env.NODE_ENV === 'production'){
 	require('dotenv').config({ path: '.env.production' })
 } else {
 	require('dotenv').config({ path: '.env.development' })
 }
 
-console.log(`STARTING SERVER!!!\n`);
+const path = String(process.env.API_PATH != undefined ? process.env.API_PATH : '/api-not-configured/');
 
-// let PORT = process.env.PORT || 8080;
-// PORT = 4000;
+app.use(path, api);
 
 const PORT = process.env.PORT || 8080;
-// const PORT = 3000;
 
-console.log(`server.js ### PORT: ${PORT}\n`);
-
-// var server = app.listen(PORT, '0.0.0.0', function () {
-// var server = app.listen(PORT, '192.168.1.1', function () {
-// var server = app.listen(config.port, '0.0.0.0', function () {    
-// var server = app.listen(PORT, '0.0.0.0', function () {
-// app.listen
+// console.log(`server.js ### PORT: ${PORT}\n`);
 
 const LOCAL_IP = getIP();
 
 app.listen(PORT, '0.0.0.0', function () {
 // app.listen(PORT, function () {
-	console.log(`App now running on => http://${LOCAL_IP}:${PORT}\n`);
-	console.log(`App now running on => http://${process.env.DOMAIN}:${PORT}\n`);
-	console.log(`API path ===========> http://${process.env.DOMAIN}:${PORT}${process.env.API_PATH}\n`);
+	console.log(`  LAN IP App runing at ==> http://${LOCAL_IP}:${PORT}`);
+	console.log(`  App now running on ====> http://${process.env.DOMAIN}:${PORT}`);
+  console.log(`  API path ==============> http://${process.env.DOMAIN}:${PORT}${path}`);
+  console.log(``);
 });
 
 
@@ -170,7 +168,6 @@ git push -u origin master
 
 
 function getIP(){
-  // 'use strict';
 
   const { networkInterfaces } = require('os');
 
@@ -184,15 +181,13 @@ function getIP(){
               if (!results[name]) {
                   results[name] = [];
               }
-
               results[name].push(net.address);
           }
       }
   }
 
-  // console.log(`results:\n${JSON.stringify(results, null, 2)}`);
-  // console.log(`results["en0"][0]:\n${JSON.stringify(results["en0"][0], null, 2)}`);
-  const output = results["en0"] ? results["en0"][0] : results["wlan0"][0]
+  const output = results["en0"] ? results["en0"][0] : results["wlan0"][0];
   
   return output;
+  
 }
