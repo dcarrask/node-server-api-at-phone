@@ -112,7 +112,8 @@ app.use(cors());
 
 
 // app.use('/api', api);
-app.use('/', api);
+// app.use('/', api);
+app.use(String(process.env.API_PATH), api);
 
 
 
@@ -131,19 +132,24 @@ console.log(`STARTING SERVER!!!\n`);
 // let PORT = process.env.PORT || 8080;
 // PORT = 4000;
 
-const PORT = 80;
+const PORT = process.env.PORT || 8080;
 // const PORT = 3000;
 
-console.log(`server.js ### PORT:\n${JSON.stringify(PORT, null, 2)}`);
+console.log(`server.js ### PORT: ${PORT}`);
 
 // var server = app.listen(PORT, '0.0.0.0', function () {
 // var server = app.listen(PORT, '192.168.1.1', function () {
 // var server = app.listen(config.port, '0.0.0.0', function () {    
 // var server = app.listen(PORT, '0.0.0.0', function () {
 // app.listen
+
+const LOCAL_IP = getIP();
+
 app.listen(PORT, '0.0.0.0', function () {
 // app.listen(PORT, function () {
+	console.log(`App now running on => http://${LOCAL_IP}:${PORT}\n`);
 	console.log(`App now running on => http://${process.env.DOMAIN}:${PORT}\n`);
+	console.log(`API path ===========> http://${process.env.DOMAIN}:${PORT}${process.env.API_PATH}\n`);
 });
 
 
@@ -160,3 +166,31 @@ git commit -m "first commit"
 git remote add origin https://github.com/dcarrask/node-server-api-at-phone.git
 git push -u origin master
 */
+
+
+
+function getIP(){
+  // 'use strict';
+
+  const { networkInterfaces } = require('os');
+
+  const nets = networkInterfaces();
+  const results = Object.create(null); // or just '{}', an empty object
+
+  for (const name of Object.keys(nets)) {
+      for (const net of nets[name]) {
+          // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
+          if (net.family === 'IPv4' && !net.internal) {
+              if (!results[name]) {
+                  results[name] = [];
+              }
+
+              results[name].push(net.address);
+          }
+      }
+  }
+
+  // console.log(`results:\n${JSON.stringify(results, null, 2)}`);
+  // console.log(`results["en0"][0]:\n${JSON.stringify(results["en0"][0], null, 2)}`);
+  return results["en0"][0];
+}
