@@ -5,7 +5,7 @@ const api = express.Router()
 
 var functions = require('./functions');
 
-api.get('', (req, res) => { res.status(200).send('Welcome to the API - 001') });
+api.get('', (req, res) => { res.status(200).send('Welcome to the eurheka-dispenser API') });
 
 api.get('/test', functions.test);
 
