@@ -6,8 +6,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "NODE_ENV=development nodemon --experimental-json-modules --experimental-specifier-resolution=node app.js",
-
-
     "local": "nodemon server.js",
     "build": "babel src --out-dir build",
     "start-babel": "nodemon server.js --exec babel-node",
@@ -27,6 +25,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-wifi": "^2.0.14"
   }
 }

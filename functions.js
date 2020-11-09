@@ -99,50 +99,101 @@ const add = async (req, res) => {
 	// config_wifi
 
 
-	const https = require('https');
+	var wifi = require('node-wifi');
+	wifi.init({
+		iface: null // network interface, choose a random wifi interface if set to null
+	});
 
-	const API_URL = `https://eurheka.loca.lt/api/dispensers/${req.body.newDispenserId}`;
+	// Scan networks
+	wifi.scan((error, networks) => {
+		if (error) {
+			console.log(error);
+		} else {
+			// console.log(networks);
+			console.log(`wifi.scan ### networks:\n${JSON.stringify(networks, null, 2)}`);
+			/*
+					networks = [
+							{
+								ssid: '...',
+								bssid: '...',
+								mac: '...', // equals to bssid (for retrocompatibility)
+								channel: <number>,
+								frequency: <number>, // in MHz
+								signal_level: <number>, // in dB
+								quality: <number>, // same as signal level but in %
+								security: 'WPA WPA2' // format depending on locale for open networks in Windows
+								security_flags: '...' // encryption protocols (format currently depending of the OS)
+								mode: '...' // network mode like Infra (format currently depending of the OS)
+							},
+							...
+					];
+					*/
+			// wifi.connect({ ssid: 'ssid', password: 'password' }, error => {
+			wifi.connect({ ssid: '__Ajuntament de Palma' }, error => {
+				if (error) {
+					console.log(`wifi.connect ### error:\n${JSON.stringify(error, null, 2)}`);
+					console.log(error);
+				}
+				console.log(`wifi.connect ### CONNECTED`);
+				// console.log('Connected');
 
-	req.body.enabled = true;
+				const https = require('https');
+			
+				const API_URL = `https://eurheka.loca.lt/api/dispensers/${req.body.newDispenserId}`;
+			
+				req.body.enabled = true;
+			
+				console.log(`add ### req.body:\n${JSON.stringify(req.body, null, 2)}`);
+				
+				https.put(API_URL, (resp) => {
+					let data = '';
+			
+					// A chunk of data has been recieved.
+					resp.on('data', (chunk) => {
+						data += chunk;
+					});
+			
+					// The whole response has been received. Print out the result.
+					resp.on('end', () => {
+						console.log(`dispenser # explanation:\n${JSON.stringify(JSON.parse(data).explanation, null, 2)}`);
+						// console.log(JSON.parse(data).explanation);
+					});
+			
+				}).on("error", (err) => {
+			
+					console.log(`dispenser # Error calling ${API_URL}: ` + err.message);
+			
+				});
+				
+				// console.log(`req:`);
+				// console.log(req);
+			
+			// {
+			// 	"name": "Gate 1",
+			// 	"client.id": "00003",
+			// 	"client.name": "CAMP NOU",
+			// 	"wifiName": "CAMPNOU_LAN",
+			// 	"wifiPassword": "0123400003",
+			// }
+			
+				res.status(200).send({
+					result: true,
+					// date: getDate().dateES,
+					// values: req.body
+				});
 
-	console.log(`add ### req.body:\n${JSON.stringify(req.body, null, 2)}`);
-	
-	https.put(API_URL, (resp) => {
-		let data = '';
-
-		// A chunk of data has been recieved.
-		resp.on('data', (chunk) => {
-			data += chunk;
-		});
-
-		// The whole response has been received. Print out the result.
-		resp.on('end', () => {
-			console.log(`dispenser # explanation:\n${JSON.stringify(JSON.parse(data).explanation, null, 2)}`);
-			// console.log(JSON.parse(data).explanation);
-		});
-
-	}).on("error", (err) => {
-
-		console.log(`dispenser # Error calling ${API_URL}: ` + err.message);
-
+			});
+		}
 	});
 	
-	// console.log(`req:`);
-	// console.log(req);
-
-// {
-// 	"name": "Gate 1",
-// 	"client.id": "00003",
-// 	"client.name": "CAMP NOU",
-// 	"wifiName": "CAMPNOU_LAN",
-// 	"wifiPassword": "0123400003",
-// }
-
-	res.status(200).send({
-		result: true,
+	res.status(400).send({
+		result: false,
+		info: 'updating dispenser + connecting to new wifi... PETTED!'
 		// date: getDate().dateES,
 		// values: req.body
 	});
+	
+	
 
     // const { name, wifiName, wifiPassword, level, client } = req.body;
 
