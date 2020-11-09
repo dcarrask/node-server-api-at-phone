@@ -99,10 +99,21 @@ const add = async (req, res) => {
 	// config_wifi
 
 
-	var wifi = require('node-wifi');
-	wifi.init({
-		iface: null // network interface, choose a random wifi interface if set to null
+	var WiFiControl = require('wifi-control');
+
+  //  Initialize wifi-control package with verbose output
+  WiFiControl.init({
+    debug: true
 	});
+	
+	console.log(`Ha inicializado la wifi!!`);
+	
+	
+	
+	var wifi = require('node-wifi');
+	// wifi.init({
+	// 	iface: null // network interface, choose a random wifi interface if set to null
+	// });
 
 	// Scan networks
 	wifi.scan((error, networks) => {
