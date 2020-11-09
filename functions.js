@@ -95,6 +95,33 @@ const add = async (req, res) => {
 
 	console.log(`req.body:`);
 	console.log(req.body);
+
+	// config_wifi
+
+
+	const https = require('https');
+
+	const API_URL = `https://eurheka.loca.lt/api/dispensers/${req.body.newDispenserId}`;
+	
+	https.put(API_URL, (resp) => {
+		let data = '';
+
+		// A chunk of data has been recieved.
+		resp.on('data', (chunk) => {
+			data += chunk;
+		});
+
+		// The whole response has been received. Print out the result.
+		resp.on('end', () => {
+			console.log(`dispenser # explanation:\n${JSON.stringify(JSON.parse(data).explanation, null, 2)}`);
+			// console.log(JSON.parse(data).explanation);
+		});
+
+	}).on("error", (err) => {
+
+		console.log(`dispenser # Error calling ${API_URL}: ` + err.message);
+
+	});
 	
 	// console.log(`req:`);
 	// console.log(req);
