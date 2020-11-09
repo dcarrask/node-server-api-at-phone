@@ -102,6 +102,10 @@ const add = async (req, res) => {
 	const https = require('https');
 
 	const API_URL = `https://eurheka.loca.lt/api/dispensers/${req.body.newDispenserId}`;
+
+	req.body.enabled = true;
+
+	console.log(`add ### req.body:\n${JSON.stringify(req.body, null, 2)}`);
 	
 	https.put(API_URL, (resp) => {
 		let data = '';
