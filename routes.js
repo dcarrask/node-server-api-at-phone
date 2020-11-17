@@ -1,23 +1,15 @@
 'use strict';
 
-const express = require('express')
-const api = express.Router()
-
-var functions = require('./functions');
-
-api.get('', (req, res) => { res.status(200).send('Welcome to the eurheka-dispenser API') });
-
-api.get('/test', functions.test);
-
-api.get('/time', functions.getTime);
-
-api.get('/dispenser-add/:name/:ssid/:pwd', functions.dispenserAdd);
-
-api.post('/dispenser-add', functions.add);
-
-api.post('/config_wifi', functions.add);
-
+const express = require('express');
+const app = express.Router();
 const cors = require('cors');
-api.use(cors);
+const functions = require('./functions');
 
-module.exports = api
+app.get('', (req, res) => { res.status(200).send('Welcome to the eurheka-dispenser app') });
+app.get('/time', functions.getTime);
+// app.post('/config_wifi', functions.configDispenser);
+app.post('/setup', functions.configDispenser);
+
+app.use(cors);
+
+module.exports = app

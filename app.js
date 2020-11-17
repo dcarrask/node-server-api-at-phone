@@ -136,7 +136,8 @@ const path = String(process.env.API_PATH != undefined ? process.env.API_PATH : '
 
 app.use(path, api);
 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080; // uncomment diegooooooo
+const PORT = 7000;
 
 // console.log(`server.js ### PORT: ${PORT}\n`);
 
