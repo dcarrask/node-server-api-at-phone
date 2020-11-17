@@ -3,7 +3,6 @@
 const api = require('./routes')
 
 const bodyParser = require('body-parser');
-const cors = require('cors');
 
 const express = require('express');
 var app = express();
@@ -101,7 +100,8 @@ const allowedOrigins = [
 // }
 // app.use(cors(corsOptions));
 
-import cors from 'cors';
+// import cors from 'cors';
+const cors = require('cors');
 app.use(cors());
 
 app.use(function(req, res, next) {
